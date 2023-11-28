@@ -10,14 +10,14 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Common\HomeController::index');
 
-$routes->get('signup', 'Auth\SignupController::index');
+$routes->get('signup', 'Auth\SignupController::index',['filter' => 'authGuard']);
 $routes->match(['get', 'post'], 'signup', 'Auth\SignupController::store');
 
-$routes->get('login', 'Auth\LoginController::index');
+$routes->get('login', 'Auth\LoginController::index',['filter' => 'authGuard']);
 $routes->match(['get', 'post'], 'login', 'Auth\LoginController::loginAuth');
+
 $routes->get('logout', 'Auth\LoginController::logoutAuth');
-$routes->get('profile', 'Auth\ProfileController::index', ['filter' => 'authGuard']);
 
 // Dashboard Routes
-
 $routes->get('dashboard', 'User\DashboardController::index',['filter' => 'authGuard']);
+$routes->get('profile', 'Auth\ProfileController::index', ['filter' => 'authGuard']);

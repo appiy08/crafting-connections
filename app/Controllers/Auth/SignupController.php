@@ -11,16 +11,8 @@ class SignupController extends BaseController
 
 	public function index()
 	{
-		$session = session();
-
 		$data = ['head_title' => ucfirst('Signup')];
-
-		$isUserLoggedIn = $session->get('isLoggedIn');
-		if ($isUserLoggedIn || $isUserLoggedIn===true) {
-			return redirect()->to('/dashboard');
-		} else {
-			echo view('auth/pages/signup', $data);
-		}
+		echo view('auth/pages/signup', $data);
 	}
 
 	public function store()

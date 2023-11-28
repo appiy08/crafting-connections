@@ -33,7 +33,7 @@
 
 						<div class="email mb-3">
 							<label class="sr-only" for="email">Email</label>
-							<input id="email" name="email" type="email" class="form-control login-email" placeholder="Email address" required="required">
+							<input id="email" name="email" type="email" class="form-control login-email" placeholder="Email address" required="required"/>
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
 									echo $validation->getError('email');
@@ -42,7 +42,11 @@
 						</div><!--//form-group-->
 						<div class="password mb-3">
 							<label class="sr-only" for="password">Password</label>
-							<input id="password" name="password" type="password" class="form-control login-password" placeholder="Password" required="required">
+							<input id="password" name="password" type="password" class="form-control login-password" placeholder="Password" required="required"/>
+							<button type="button" id="togglePassword" class="btn p-1 z-3 position-absolute top-50 translate-middle-y btn-toggle-password">
+							<i class="fa-solid fa-eye toggle-password-icon"></i>
+								<i class="fa-solid fa-eye-slash toggle-password-icon d-none"></i>
+							</button>
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
 									echo $validation->getError('password');
@@ -51,7 +55,7 @@
 							<div class="extra mt-3 row justify-content-between">
 								<div class="col-6">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="RememberPassword">
+										<input class="form-check-input" type="checkbox" value="" id="RememberPassword"/>
 										<label class="form-check-label" for="RememberPassword">
 											Remember me
 										</label>

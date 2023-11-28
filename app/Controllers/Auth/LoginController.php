@@ -13,19 +13,10 @@ class LoginController extends BaseController
 
     public function index()
     {
-        $session = session();
-
         $data = [
             'head_title' => ucfirst('Login')
         ];
-
-        $isUserLoggedIn = $session->get('isLoggedIn');
-        echo $isUserLoggedIn;
-        if ($isUserLoggedIn || $isUserLoggedIn === true) {
-            return  redirect()->to('/dashboard');
-        } else {
-            echo view('auth/pages/login', $data);
-        }
+        echo view('auth/pages/login', $data);
     }
 
     public function loginAuth()

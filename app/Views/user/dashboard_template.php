@@ -350,7 +350,7 @@
 	</div><!--//app-wrapper-->
 
 
-	<!-- Javascript -->
+	<!-- Bootstrap Javascript -->
 	<script src="<?= base_url("assets/plugins/popper.min.js") ?>"></script>
 	<script src="<?= base_url("assets/plugins/bootstrap/js/bootstrap.min.js") ?>"></script>
 

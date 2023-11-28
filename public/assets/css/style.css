@@ -131,3 +131,8 @@ body{
 .fs-7{
     font-size: .875rem;
 }
+
+.btn-toggle-password{
+    right: 5%;
+    cursor: pointer;
+}
