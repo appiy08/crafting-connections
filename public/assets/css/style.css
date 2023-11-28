@@ -136,3 +136,6 @@ body{
     right: 5%;
     cursor: pointer;
 }
+.main-container{
+    padding-top: 5rem;
+}

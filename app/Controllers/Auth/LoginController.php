@@ -5,8 +5,6 @@ namespace App\Controllers\Auth;
 use App\Controllers\BaseController;
 use App\Models\Auth\UserModel;
 
-
-
 class LoginController extends BaseController
 {
     protected $helpers = ['url', 'form'];
@@ -56,6 +54,6 @@ class LoginController extends BaseController
     {
         $session = session();
         $session->destroy();
-        redirect('/login');
+        redirect()->to('/login');
     }
 }

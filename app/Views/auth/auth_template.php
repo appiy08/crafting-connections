@@ -30,7 +30,7 @@
 
 </head>
 
-<body class="app app-signup p-0">
+<body class="app app-signup app-login p-0">
 	<main>
 		<?= $this->renderSection('content'); ?>
 	</main>

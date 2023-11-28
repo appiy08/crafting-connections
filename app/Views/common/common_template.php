@@ -25,35 +25,38 @@
 
 	<!-- App CSS -->
 	<link id="theme-style" rel="stylesheet" href="<?= base_url("assets/css/portal.css") ?>">
+	<link id="theme-style" rel="stylesheet" href="<?= base_url("assets/css/style.css") ?>">
 
 </head>
 
 <body>
-	<header>
-		<nav class="navbar bg-body-tertiary">
+	<header class="app-header fixed-top h-auto">
+		<nav class="navbar position-relative">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#">
 					<img src="<?= base_url('assets/images/logo/crafting_connections_logo.svg') ?>" alt="Logo" width="100%" height="48" class="d-inline-block align-text-top" />
 				</a>
-				<div>
-					<a href="<?= route_to('signup') ?>" class="btn btn-primary">Signup</a>
-					<div class="app-utility-item app-user-dropdown dropdown">
-						<a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><img src="assets/images/user.png" alt="user profile"></a>
-						<ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-							<li><a class="dropdown-item" href="account.html">Account</a></li>
-							<li><a class="dropdown-item" href="settings.html">Settings</a></li>
-							<li>
-								<hr class="dropdown-divider">
-							</li>
-							<li><a class="dropdown-item" href="login.html">Log Out</a></li>
-						</ul>
-					</div><!--//app-user-dropdown-->
+				<div class="row justify-content-between align-items-center">
+					<div class="col-auto">
+						<a href="<?= route_to('signup') ?>" class="btn btn-primary">Signup</a>
+						<div class="app-utility-item app-user-dropdown dropdown">
+							<a class="dropdown-toggle" id="front-user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-offset="10,20"><img src="assets/images/user.png" alt="user profile"></a>
+							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="front-user-dropdown-toggle">
+								<li><a class="dropdown-item" href="<?= base_url('/account') ?>">Account</a></li>
+								<li><a class="dropdown-item" href="settings.html">Settings</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="<?= base_url('logout') ?>">Log Out</a></li>
+							</ul>
+						</div><!--//app-user-dropdown-->
+					</div>
 				</div>
 			</div>
 		</nav>
 	</header>
 
-	<main>
+	<main class="main-container">
 		<?= $this->renderSection('content'); ?>
 	</main>
 
@@ -71,11 +74,9 @@
 		</div>
 	</footer>
 	<!-- Scripts links -->
-	<!-- Bootstrap Script -->
+	<!-- Bootstrap Javascript -->
 	<script src="<?= base_url("assets/plugins/popper.min.js") ?>"></script>
-	<script src="<?= base_url("assets/plugins/bootstrap/js/bootstrap.min.js") ?>"></script>
-	<!-- Page Specific JS -->
-	<script src="<?= base_url("assets/js/app.js") ?>"></script>
+	<script src="<?= base_url("assets/plugins/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
 
 </body>
 
