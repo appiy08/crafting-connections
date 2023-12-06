@@ -15,6 +15,7 @@ class UserModel extends Model
 		'username',
 		'email',
 		'password',
+		'remember_me_token',
 		'created_at'
 	];
 
@@ -23,4 +24,29 @@ class UserModel extends Model
 	protected $dateFormat           = 'datetime';
 	protected $createdField         = 'created_at';
 	protected $updatedField         = 'modified_at';
+
+	public function verifyEmail($email)
+	{
+		$builder = $this->db->table('users');
+		$builder->select('id, email', 'password');
+		$builder->where('email', $email);
+		$result = $builder->get();
+		if (count($result->getResultArray()) >= 1) {
+			return $result->getRowArray();
+		} else {
+			return false;
+		}
+	}
+	public function modifiedAt($id)
+	{
+		$builder = $this->db->table('users');
+		$builder->where('id', $id);
+		$builder->update(['modifiedAt' => MYSQLI_TYPE_TIMESTAMP]);
+		$result = $builder->get();
+		if ($this->db->affectedRows() >= 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

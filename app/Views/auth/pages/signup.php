@@ -44,13 +44,18 @@
 						</div>
 						<div class="extra mb-3">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="<?= set_value('termscondition') ?>" id="TermsCondition
+								<input class="form-check-input" type="checkbox" name="termscondition" value="1" id="terms-condition
 								"/>
-								<label class="form-check-label" for="TermsCondition
+								<label class="form-check-label" for="terms-condition
 								">
 									I agree to Crafting Connections <a href="#" class="app-link">Terms of Service</a> and <a href="#" class="app-link">Privacy Policy</a>.
 								</label>
 							</div>
+							<p class="text-danger fs-7">
+								<?php if (isset($validation)) {
+									echo $validation->getError('termscondition');
+								} ?>
+							</p>
 						</div><!--//extra-->
 
 						<div class="text-center">

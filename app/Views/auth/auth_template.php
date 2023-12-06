@@ -18,7 +18,7 @@
 	<link rel="manifest" href="<?= base_url("assets/favicon/site.webmanifest") ?>" />
 	<link rel="mask-icon" href="<?= base_url("assets/favicon/safari-pinned-tab.svg") ?>" color="#5bbad5" />
 
-	<title><?= $head_title; ?></title>
+	<title><?= ucfirst($head_title); ?></title>
 
 	<!-- FontAwesome JS-->
 	<script defer src="<?= base_url("assets/plugins/fontawesome/js/all.min.js") ?>"></script>

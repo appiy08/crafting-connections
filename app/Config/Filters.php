@@ -31,7 +31,8 @@ class Filters extends BaseConfig
         'csrf'     => \CodeIgniter\Filters\CSRF::class,
         'toolbar'  => \CodeIgniter\Filters\DebugToolbar::class,
         'honeypot' => \CodeIgniter\Filters\Honeypot::class,
-        'loginSignupAuthGuard' => \App\Filters\LoginSignupAuthGuard::class,
+        'loginAuthGuard' => \App\Filters\LoginAuthGuard::class,
+        'signupAuthGuard' => \App\Filters\SignupAuthGuard::class,
         'dashboardAuthGuard' => \App\Filters\DashboardAuthGuard::class,
     ];
 

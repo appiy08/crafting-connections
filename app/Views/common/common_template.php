@@ -18,7 +18,7 @@
 	<link rel="manifest" href="<?= base_url("assets/favicon/site.webmanifest") ?>" />
 	<link rel="mask-icon" href="<?= base_url("assets/favicon/safari-pinned-tab.svg") ?>" color="#5bbad5" />
 
-	<title><?= $head_title; ?></title>
+	<title><?= ucfirst($head_title); ?></title>
 
 	<!-- FontAwesome JS-->
 	<script defer src="<?= base_url("assets/plugins/fontawesome/js/all.min.js") ?>"></script>
@@ -38,7 +38,9 @@
 				</a>
 				<div class="row justify-content-between align-items-center">
 					<div class="col-auto">
-						<a href="<?= route_to('signup') ?>" class="btn btn-primary">Signup</a>
+						<?php if($is_user_logged_in===false||$is_user_logged_in===null):?>
+						<a href="<?= base_url('/login') ?>" class="btn btn-primary">Login</a>
+						<?php else: ?>
 						<div class="app-utility-item app-user-dropdown dropdown">
 							<a class="dropdown-toggle" id="front-user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false" data-bs-offset="10,20"><img src="assets/images/user.png" alt="user profile"></a>
 							<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="front-user-dropdown-toggle">
@@ -50,6 +52,7 @@
 								<li><a class="dropdown-item" href="<?= base_url('logout') ?>">Log Out</a></li>
 							</ul>
 						</div><!--//app-user-dropdown-->
+						<?php endif?>
 					</div>
 				</div>
 			</div>

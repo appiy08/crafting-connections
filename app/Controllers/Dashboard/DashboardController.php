@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers\User;
+namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 
@@ -10,6 +10,6 @@ class DashboardController extends BaseController
 	{
 		$data = ['head_title' => ucfirst('Dashboard')];
 
-		echo view('user/pages/index', $data);
+		echo view('dashboard/pages/index', $data);
 	}
 }

@@ -10,14 +10,16 @@ use CodeIgniter\Router\RouteCollection;
 
 $routes->get('/', 'Common\HomeController::index');
 
-$routes->get('signup', 'Auth\SignupController::index', ['filter' => 'loginSignupAuthGuard']);
+$routes->get('signup', 'Auth\SignupController::index', ['filter' => 'loginAuthGuard']);
 $routes->match(['get', 'post'], 'signup', 'Auth\SignupController::store');
 
-$routes->get('login', 'Auth\LoginController::index', ['filter' => 'loginSignupAuthGuard']);
+$routes->get('login', 'Auth\LoginController::index', ['filter' => 'signupAuthGuard']);
 $routes->match(['get', 'post'], 'login', 'Auth\LoginController::loginAuth');
 
-$routes->get('logout', 'Auth\LoginController::logoutAuth');
+$routes->get('forgot-password', 'Auth\ForgotPasswordController::index');
+$routes->match(['get', 'post'], 'forgot-password', 'Auth\ForgotPasswordController::forgotPasswordAction');
+
+$routes->get('logout', 'Auth\AuthController::logoutAuth');
 
 // Dashboard Routes
-$routes->get('dashboard', 'User\DashboardController::index', ['filter' => 'dashboardAuthGuard']);
-$routes->get('profile', 'Auth\ProfileController::index', ['filter' => 'dashboardAuthGuard']);
+$routes->get('dashboard', 'Dashboard\DashboardController::index', ['filter' => 'dashboardAuthGuard']);

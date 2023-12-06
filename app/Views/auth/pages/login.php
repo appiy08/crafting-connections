@@ -6,14 +6,18 @@
 		<div class="col-12 col-md-7 col-lg-6 auth-main-col text-center p-5">
 			<div class="d-flex flex-column align-content-end">
 				<div class="app-auth-body mx-auto">
-					<div class="app-auth-branding mb-4"><a class="app-logo" href="<?=base_url('/')?>"><img class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo"></a></div>
+					<div class="app-auth-branding mb-4"><a class="app-logo" href="<?= base_url('/') ?>"><img class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo"></a></div>
 					<h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
 					<div class="auth-form-container text-start">
+						<?php if (isset($flash_msg)) : ?>
+							<div class="alert alert-danger" role="alert">
+								<?= $flash_msg ?>
+							</div>
+						<?php endif ?>
 						<?= form_open(base_url() . 'login', ['class' => 'auth-form login-form']) ?>
-
 						<div class="email mb-3">
 							<label class="sr-only" for="email">Email</label>
-							<input id="email" name="email" type="email" class="form-control login-email" placeholder="Email address" required="required" />
+							<input id="email" name="email" type="email" class="form-control login-email" placeholder="Email address" />
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
 									echo $validation->getError('email');
@@ -23,7 +27,7 @@
 						<div class="password mb-3 ">
 							<div class="position-relative">
 								<label class="sr-only" for="password">Password</label>
-								<input id="password" name="password" type="password" class="form-control login-password" placeholder="Password" required="required" />
+								<input id="password" name="password" type="password" class="form-control login-password" placeholder="Password" />
 								<button type="button" id="togglePassword" class="btn p-1 z-3 position-absolute top-50 translate-middle-y btn-toggle-password">
 									<i class="fa-solid fa-eye toggle-password-icon"></i>
 									<i class="fa-solid fa-eye-slash toggle-password-icon d-none"></i>
@@ -37,15 +41,15 @@
 							<div class="extra mt-3 row justify-content-between">
 								<div class="col-6">
 									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="RememberPassword" />
-										<label class="form-check-label" for="RememberPassword">
+										<input class="form-check-input" type="checkbox" name="remember-password" value="1" id="remember-password" />
+										<label class="form-check-label" for="remember-password">
 											Remember me
 										</label>
 									</div>
 								</div><!--//col-6-->
 								<div class="col-6">
 									<div class="forgot-password text-end">
-										<a href="reset-password.html">Forgot password?</a>
+										<a href="<?= base_url('forgot-password') ?>">Forgot password?</a>
 									</div>
 								</div><!--//col-6-->
 							</div><!--//extra-->
@@ -55,7 +59,7 @@
 						</div>
 						<?= form_close() ?>
 
-						<div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="<?= base_url('/login') ?>">here</a>.</div>
+						<div class="auth-option text-center pt-5">No Account? Sign up <a class="text-link" href="<?= base_url('/signup') ?>">here</a>.</div>
 					</div><!--//auth-form-container-->
 
 				</div><!--//auth-body-->
@@ -85,4 +89,5 @@
 		</div><!--//auth-background-col-->
 
 	</div><!--//row-->
+</section>
 <?= $this->endSection() ?>

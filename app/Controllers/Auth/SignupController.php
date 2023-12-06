@@ -19,15 +19,15 @@ class SignupController extends BaseController
 	{
 		$data = ['head_title' => 'Signup'];
 
-		$rules = [
+		$form_rules = [
 			'username' => 'required|min_length[2]|max_length[50]',
 			'email' => 'required|min_length[4]|max_length[100]|valid_email|is_unique[users.email]',
 			'password' => 'required|min_length[4]|max_length[50]',
+			'termscondition' => ['label' => 'Terms Condition', 'rules' => 'required|greater_than[0]', 'errors' => ['required' => 'Please accept the Terms & Privacy Policy']]
 		];
 
-		if ($this->validate($rules)) {
+		if ($this->validate($form_rules)) {
 			$userModel = new UserModel();
-
 			$data = [
 				'username' => $this->request->getVar('username'),
 				'email' => $this->request->getVar('email'),
