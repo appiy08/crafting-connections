@@ -11,7 +11,7 @@
 					<div class="auth-form-container text-start mx-auto">
 						<?= form_open(base_url() . 'signup', ['class' => 'auth-form auth-signup-form']) ?>
 						<div class="username mb-3">
-							<label class="sr-only" for="signup-name">Your Name</label>
+							<label class="sr-only" for="username">Your Name</label>
 							<input id="username" name="username" type="text" value="<?= set_value('username') ?>" class="form-control signup-name" placeholder="Full name" />
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
@@ -20,7 +20,7 @@
 							</p>
 						</div>
 						<div class="email mb-3">
-							<label class="sr-only" for="signup-email">Your Email</label>
+							<label class="sr-only" for="email">Your Email</label>
 							<input id="email" name="email" type="email" value="<?= set_value('email') ?>" class="form-control signup-email" placeholder="Email" />
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
@@ -29,7 +29,7 @@
 							</p>
 						</div>
 						<div class="password mb-3 position-relative">
-							<label class="sr-only" for="signup-password">Password</label>
+							<label class="sr-only" for="password">Password</label>
 							<input id="password" name="password" type="password" value="<?= set_value('password') ?>" class="form-control pe-4 signup-password" placeholder="Create a password" />
 							<button type="button" id="togglePassword" class="btn p-1 z-3 position-absolute top-50 translate-middle-y btn-toggle-password">
 								<i class="fa-solid fa-eye toggle-password-icon"></i>

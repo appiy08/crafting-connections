@@ -7,15 +7,25 @@
 			<div class="d-flex flex-column align-content-end">
 				<div class="app-auth-body mx-auto">
 					<div class="app-auth-branding mb-4"><a class="app-logo" href="<?= base_url('/') ?>"><img class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo" /></a></div>
-					<h2 class="auth-heading text-center mb-4">Password Reset</h2>
+					<h2 class="auth-heading text-center mb-4">Forgot Password</h2>
 
 					<div class="auth-intro mb-4 text-center">Enter your email address below. We'll email you a link to a page where you can easily create a new password.</div>
 
 					<div class="auth-form-container text-left">
-						<?= form_open(base_url() . 'forgot-password', ['class' => 'auth-form resetpass-form']) ?>
+						<?php if(isset($session)) : if($session->getTempdata('error')) : ?>
+								<div class="alert alert-danger" role="alert">
+									<?= $session->getTempdata('error') ?>
+								</div>
+							<?php elseif ($session->getTempdata('success')) : ?>
+								<div class="alert alert-success" role="alert">
+									<?= $session->getTempdata('success') ?>
+								</div>
+						<?php endif;
+						endif; ?>
+						<?= form_open(base_url() . 'reset-password', ['class' => 'auth-form resetpass-form']) ?>
 						<div class="email mb-3">
-							<label class="sr-only" for="reg-email">Your Email</label>
-							<input id="reg-email" name="reg-email" type="email" class="form-control login-email" placeholder="Your Email" />
+							<label class="sr-only" for="email">Your Email</label>
+							<input id="email" name="email" type="email" class="form-control login-email" placeholder="Your Email" />
 							<p class="text-danger fs-7">
 								<?php if (isset($validation)) {
 									echo $validation->getError('email');

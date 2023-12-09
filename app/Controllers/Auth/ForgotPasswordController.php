@@ -7,57 +7,118 @@ use App\Models\Auth\UserModel;
 
 class ForgotPasswordController extends BaseController
 {
+    public $userModel, $session;
+    public function __construct()
+    {
+        helper(['form', 'url']);
+        $this->session = session();
+        $this->userModel = new UserModel();
+    }
     public function index()
     {
         $data['head_title'] = 'Forgot Password';
 
-        return view('auth/pages/forgot-password', $data);
+        return view('auth/pages/reset_password_link_sent', $data);
     }
-    public function forgotPasswordAction()
+    public function resetPasswordLinkSentAction()
     {
-        $userModel = new UserModel();
-        $session = session();
-
         $data['head_title'] = 'Forgot Password';
 
-        if ($this->request->getPost()) {
+        if ($this->request->is('post')) {
             $form_rules = ['email' => 'required|min_length[4]|max_length[100]|valid_email'];
+
             if ($this->validate($form_rules)) {
                 $email = $this->request->getVar('email', FILTER_SANITIZE_EMAIL);
-                $userdata = $userModel->verifyEmail($email);
+                $userdata = $this->userModel->verifyEmail($email);
+
                 if (!empty($userdata)) {
-                    if ($userModel->modifiedAt($userdata['id'])) {
+
+                    if ($this->userModel->updatedAt($userdata['id'])) {
                         $to = $email;
                         $subject = 'Reset Password';
-                        $token = $userdata['id'];
-                        $message = 'Hi ' . $userdata['username'] . '<br/><br/>'
-                            . 'Your reset password request has been received. Please click'
-                            . 'the below link to reset your password.<br/><br/>'
-                            . '<a href="' . base_url() . 'reset-password/' . $token . '">Reset Password</a>'
-                            . 'Thanks Crafting Connections';
+                        $token = $userdata['uniid'];
+
+                        $email_body_data = [
+                            'user_email' => $to,
+                            'pass_reset_link' => base_url() . 'reset-password/' . $token
+                        ];
 
                         $email = \Config\Services::email();
-                        $email->setFrom('adarshpatidar.dev08@gmail.com', 'Adarsh Patidar');
+
+                        $email->setFrom('adarsh.patidar.dev.8120@outlook.com', 'Reset Password');
                         $email->setTo($to);
                         $email->setSubject($subject);
-                        $email->setMessage($message);
+                        $email->setMessage(view('email-template/reset_password', $email_body_data));
 
                         if ($email->send()) {
-                            $session->setTempdata('success', 'Reset password link sent to your email address, please reset password link will be automatically expires in 15 minutes.');
-                            return redirect()->to(current_url());
+                            $this->session->setTempdata('success', 'Password reset link sent to your email address. Link will be expires in 15 minutes.', 3);
+                            $data +=  ['session' => $this->session];
+                            return view('auth/pages/reset_password_link_sent', $data);
+                        } else {
+                            $this->session->setTempdata('error', 'Sorry, unable to sent email. try again.', 3);
+                            $data += ['session' => $this->session];
+                            return view('auth/pages/reset_password_link_sent', $data);
                         }
                     } else {
-                        $session->setFlashdata('error', 'Sorry, unable to update. try again.');
-                        return redirect()->to(current_url());
+                        $this->session->setTempdata('error', 'Sorry, unable to update. try again.', 3);
+                        $data += ['session' => $this->session];
+                        return view('auth/pages/reset_password_link_sent', $data);
                     }
                 } else {
-                    $session->setFlashdata('error', 'Email does not exist');
-                    return redirect()->to(current_url());
+                    $this->session->setTempdata('error', 'Email does not exist', 3);
+                    $data += ['session' => $this->session];
+                    return view('auth/pages/reset_password_link_sent', $data);
                 }
             } else {
                 $data += ['validation' => $this->validator];
-                return view('auth/pages/forgot-password', $data);
+                return view('auth/pages/reset_password_link_sent', $data);
             }
+        }
+    }
+    public function resetPasswordAction($token = null)
+    {
+        $data['head_title'] = 'Reset Password';
+        if (!empty($token)) {
+            $data += ['token' => $token];
+            $userdata = $this->userModel->verifyToken($token);
+            if (!empty($userdata)) {
+                if ($this->checkExpiryDate($userdata['updated_at'])) {
+                    if ($this->request->is('post')) {
+                        $form_rules = ['password' => 'required|min_length[6]|max_length[18]', 'confirm_password' => 'required|matches[password]'];
+                        if ($this->validate($form_rules)) {
+                            $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
+                            if ($this->userModel->updatePassword($token, $password)) {
+                                $this->session->setTempdata('success', 'Password updated successfully. Login now.', 3);
+                                return redirect()->to('/login');
+                            } else {
+                                $this->session->setTempdata('error', 'Sorry, Unable to update password, try again.', 3);
+                                return redirect()->to(current_url());
+                            }
+                        } else {
+                            $data['validation'] = $this->validator;
+                        }
+                    }
+                } else {
+                    $data['error'] = 'Reset password link was expired';
+                }
+            } else {
+                $data['error'] = 'Unable to find user account';
+            }
+        } else {
+            $data['error'] = 'Sorry! Unauthorized access';
+        }
+
+        return view('auth/pages/reset_password', $data);
+    }
+    public function checkExpiryDate($time)
+    {
+        $update_time = strtotime($time);
+        $current_time = time();
+        $timeDiff = ($current_time - $update_time) / 60;
+        if ($timeDiff < 900) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

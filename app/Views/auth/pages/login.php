@@ -9,6 +9,12 @@
 					<div class="app-auth-branding mb-4"><a class="app-logo" href="<?= base_url('/') ?>"><img class="logo-icon me-2" src="assets/images/app-logo.svg" alt="logo"></a></div>
 					<h2 class="auth-heading text-center mb-5">Log in to Portal</h2>
 					<div class="auth-form-container text-start">
+						<?php if (isset($session)) : if ($session->getTempdata('success')) : ?>
+								<div class="alert alert-success" role="alert">
+									<?= $session->getTempdata('success') ?>
+								</div>
+						<?php endif;
+						endif; ?>
 						<?php if (isset($flash_msg)) : ?>
 							<div class="alert alert-danger" role="alert">
 								<?= $flash_msg ?>
@@ -49,7 +55,7 @@
 								</div><!--//col-6-->
 								<div class="col-6">
 									<div class="forgot-password text-end">
-										<a href="<?= base_url('forgot-password') ?>">Forgot password?</a>
+										<a href="<?= base_url('reset-password') ?>">Forgot password?</a>
 									</div>
 								</div><!--//col-6-->
 							</div><!--//extra-->
