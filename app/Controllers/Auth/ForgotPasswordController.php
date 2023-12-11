@@ -84,7 +84,7 @@ class ForgotPasswordController extends BaseController
             if (!empty($userdata)) {
                 if ($this->checkExpiryDate($userdata['updated_at'])) {
                     if ($this->request->is('post')) {
-                        $form_rules = ['password' => 'required|min_length[6]|max_length[18]', 'confirm_password' => 'required|matches[password]'];
+                        $form_rules = ['password' => ['label' => 'Password', 'rules' => 'required|min_length[6]|max_length[18]'], 'confirm_password' => ['label' => 'Confirm Password', 'rules' => 'required|matches[password]']];
                         if ($this->validate($form_rules)) {
                             $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
                             if ($this->userModel->updatePassword($token, $password)) {
