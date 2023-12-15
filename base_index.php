@@ -75,8 +75,8 @@
 	</footer>
 	<!-- Scripts links -->
 	<!-- Jquery CDN -->
-	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" crossorigin="anonymous"></script>
+	<script src="<?=base_url("https://code.jquery.com/jquery-3.6.0.slim.min.js")?>" crossorigin="anonymous"></script>
 	<!-- Bootstrap 4.5 Script -->
-	<script src="assets/front/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<script src="<?=base_url("assets/front/js/bootstrap.min.js")?>" crossorigin="anonymous"></script>
 </body>
 </html>

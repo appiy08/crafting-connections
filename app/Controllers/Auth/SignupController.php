@@ -16,7 +16,7 @@ class SignupController extends BaseController
 	public function index()
 	{
 		$data = ['head_title' => ucfirst('Signup')];
-		echo view('auth/pages/signup', $data);
+		echo view('auth/signup', $data);
 	}
 
 	public function store()
@@ -44,7 +44,7 @@ class SignupController extends BaseController
 			return redirect()->to('/login');
 		} else {
 			$data['validation'] = $this->validator;
-			echo view('auth/pages/signup', $data);
+			echo view('auth/signup', $data);
 		}
 	}
 }

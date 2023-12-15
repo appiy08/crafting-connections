@@ -4,21 +4,22 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
 use App\Models\Auth\UserModel;
+use CodeIgniter\Cookie\Cookie;
 use DateTime;
+use DateTimeZone;
 
-class LoginController extends BaseController
-{
+
+class LoginController extends BaseController {
+
     protected $helpers = ['url', 'form', 'cookie'];
 
-    public function index()
-    {
+    public function index() {
         $data = ['head_title' => 'Login'];
 
-        echo view('auth/pages/login', $data);
+        echo view('auth/login', $data);
     }
 
-    public function loginAuth()
-    {
+    public function loginAuth() {
         $session = session();
         $userModel = new UserModel();
 
@@ -50,6 +51,11 @@ class LoginController extends BaseController
                     ];
 
                     $session->set($user_data);
+                    $cookie = new Cookie(
+                    'isLoggedIn',true,
+                    [
+                    'expires' => new DateTime('+24 hours'),
+                    ]);
 
                     $n = 20;
                     $randomString = bin2hex(random_bytes($n));
@@ -59,10 +65,10 @@ class LoginController extends BaseController
                         delete_cookie('remember_me_token');
 
                         $remember_me_token = array(
-                            'name'   => 'remember_me_token',
-                            'value'  => $randomString,
+                            'name' => 'remember_me_token',
+                            'value' => $randomString,
                             'expire' => new DateTime('+14 days'),
-                            'path'   => '/',
+                            'path' => '/',
                         );
 
                         set_cookie($remember_me_token);
@@ -75,16 +81,16 @@ class LoginController extends BaseController
                 } else {
                     $session->setFlashdata('msg', 'Password is incorrect.');
                     $data += ['flash_msg' => $session->getFlashdata('msg')];
-                    echo view('auth/pages/login', $data);
+                    echo view('auth/login', $data);
                 }
             } else {
                 $session->setFlashdata('msg', 'Email does not exist.');
                 $data += ['flash_msg' => $session->getFlashdata('msg')];
-                echo view('auth/pages/login', $data);
+                echo view('auth/login', $data);
             }
         } else {
             $data += ['validation' => $this->validator];
-            echo view('auth/pages/login', $data);
+            echo view('auth/login', $data);
         }
     }
 }

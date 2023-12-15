@@ -20,9 +20,12 @@ $routes->get('reset-password', 'Auth\ForgotPasswordController::index');
 $routes->match(['get', 'post'], 'reset-password', 'Auth\ForgotPasswordController::resetPasswordLinkSentAction');
 $routes->get('reset-password/(:alphanum)', 'Auth\ForgotPasswordController::resetPasswordAction/$1');
 $routes->match(['get', 'post'], 'reset-password/(:alphanum)', 'Auth\ForgotPasswordController::resetPasswordAction/$1');
-
+ 
 
 $routes->get('logout', 'Auth\AuthController::logoutAuth');
 
 // Dashboard Routes
-$routes->get('dashboard', 'Dashboard\DashboardController::index', ['filter' => 'dashboardAuthGuard']);
+$routes->group('',['filter' => 'dashboardAuthGuard'], static function ($routes) {
+    $routes->get('dashboard', 'Dashboard\DashboardController::index');
+    $routes->get('dashboard/create-article', 'Dashboard\ArticleController::index');
+});

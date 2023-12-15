@@ -6,10 +6,13 @@ use App\Controllers\BaseController;
 
 class DashboardController extends BaseController
 {
-	public function index()
+    public function __construct() {
+        helper(['menu']);
+    }
+    public function index()
 	{
 		$data = ['head_title' => ucfirst('Dashboard')];
 
-		echo view('dashboard/pages/index', $data);
+		echo view('dashboard/index', $data);
 	}
 }

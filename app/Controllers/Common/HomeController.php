@@ -21,6 +21,6 @@ class HomeController extends BaseController
 
 		$data = ['head_title' => ucfirst('home'), 'is_user_logged_in' => $isUserLoggedIn]; // Capitalize the first letter
 
-		echo view('common/pages/index', $data);
+		echo view('front/home', $data);
 	}
 }
