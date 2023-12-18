@@ -3,11 +3,10 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
-use App\Models\Auth\UserModel;
+use App\Models\Auth\AuthModel;
 use CodeIgniter\Cookie\Cookie;
 use DateTime;
 use DateTimeZone;
-
 
 class LoginController extends BaseController {
 
@@ -21,7 +20,7 @@ class LoginController extends BaseController {
 
     public function loginAuth() {
         $session = session();
-        $userModel = new UserModel();
+        $authModel = new AuthModel();
 
         $data = [
             'head_title' => 'login'
@@ -31,7 +30,7 @@ class LoginController extends BaseController {
         $password = $this->request->getVar('password');
         $rememberPassword = $this->request->getVar('remember-password');
 
-        $user_data = $userModel->where('email', $email)->first();
+        $user_data = $authModel->where('email', $email)->first();
 
         $form_rules = [
             'email' => 'required|min_length[4]|max_length[100]|valid_email',
@@ -47,14 +46,15 @@ class LoginController extends BaseController {
                         'id' => $user_data['id'],
                         'name' => $user_data['username'],
                         'email' => $user_data['email'],
+                        'uniid' => $user_data['uniid'],
                         'isLoggedIn' => TRUE
                     ];
 
                     $session->set($user_data);
                     $cookie = new Cookie(
-                    'isLoggedIn',true,
-                    [
-                    'expires' => new DateTime('+24 hours'),
+                            'isLoggedIn', true,
+                            [
+                        'expires' => new DateTime('+24 hours'),
                     ]);
 
                     $n = 20;
@@ -74,7 +74,7 @@ class LoginController extends BaseController {
                         set_cookie($remember_me_token);
 
                         $update_data = ['remember_me_token' => $randomString];
-                        $userModel->update($user_data['id'], $update_data);
+                        $authModel->update($user_data['id'], $update_data);
                     }
 
                     return redirect()->to('/dashboard');

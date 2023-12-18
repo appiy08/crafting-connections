@@ -2,11 +2,10 @@
 
 namespace App\Models\Auth;
 
-use CodeIgniter\I18n\Time;
 use CodeIgniter\Model;
 
 
-class UserModel extends Model
+class AuthModel extends Model
 {
 	protected $DBGroup = 'default';
 
@@ -42,7 +41,6 @@ class UserModel extends Model
 	public function updatedAt($id)
 	{
 		$datetime = date('Y-m-d H:i:s');
-
 		$builder = $this->db->table('users');
 		$builder->where('id', $id);
 		$builder->update(['updated_at' => $datetime]);

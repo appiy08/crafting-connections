@@ -149,5 +149,3 @@ tinymce.init({
     content_css: useDarkMode ? 'dark' : 'default',
     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
 });
-console.log("tinyMCE getContent");
-console.log(tinymce.activeEditor.getContent());

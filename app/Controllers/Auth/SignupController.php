@@ -3,15 +3,15 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
-use App\Models\Auth\UserModel;
+use App\Models\Auth\AuthModel;
 
 class SignupController extends BaseController
 {
-	public $userModel;
+	public $authModel;
 	public function __construct()
 	{
 		helper(['form','url']);
-		$this->userModel = new UserModel();
+		$this->authModel = new AuthModel();
 	}
 	public function index()
 	{
@@ -39,7 +39,7 @@ class SignupController extends BaseController
 				'uniid' => $uniid,
 				'created_at' => date('y-m-d h:i:s')
 			];
-			$this->userModel->save($user_data);
+			$this->authModel->save($user_data);
 
 			return redirect()->to('/login');
 		} else {

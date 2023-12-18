@@ -2,12 +2,12 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
-use App\Models\Auth\UserModel;
+use App\Models\Auth\AuthModel;
 
 class ForgotPasswordController extends BaseController
 {
 
-    public $userModel, $session;
+    public $authModel, $session;
 
     public function __construct()
     {
@@ -16,7 +16,7 @@ class ForgotPasswordController extends BaseController
             'url'
         ]);
         $this->session = session();
-        $this->userModel = new UserModel();
+        $this->authModel = new AuthModel();
     }
 
     public function index()
@@ -37,11 +37,11 @@ class ForgotPasswordController extends BaseController
 
             if ($this->validate($form_rules)) {
                 $email = $this->request->getVar('email', FILTER_SANITIZE_EMAIL);
-                $userdata = $this->userModel->verifyEmail($email);
+                $userdata = $this->authModel->verifyEmail($email);
 
                 if (! empty($userdata)) {
 
-                    if ($this->userModel->updatedAt($userdata['id'])) {
+                    if ($this->authModel->updatedAt($userdata['id'])) {
                         $to = $email;
                         $subject = 'Reset Password';
                         $token = $userdata['uniid'];
@@ -101,7 +101,7 @@ class ForgotPasswordController extends BaseController
             $data += [
                 'token' => $token
             ];
-            $userdata = $this->userModel->verifyToken($token);
+            $userdata = $this->authModel->verifyToken($token);
             if (! empty($userdata)) {
                 if ($this->checkExpiryDate($userdata['updated_at'])) {
                     if ($this->request->is('post')) {
@@ -117,7 +117,7 @@ class ForgotPasswordController extends BaseController
                         ];
                         if ($this->validate($form_rules)) {
                             $password = password_hash($this->request->getVar('password'), PASSWORD_DEFAULT);
-                            if ($this->userModel->updatePassword($token, $password)) {
+                            if ($this->authModel->updatePassword($token, $password)) {
                                 $this->session->setTempdata('success', 'Password updated successfully. Login now.', 3);
                                 return redirect()->to('/login');
                             } else {
