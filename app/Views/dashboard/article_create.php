@@ -5,7 +5,7 @@
     <div class="container-xl">
         <div class="row g-3 mb-4 align-items-center justify-content-between">
             <div class="col-auto">
-                <h1 class="app-page-title mb-0">Create Article</h1>
+                <h1 class="app-page-title mb-0">Article Create</h1>
             </div>
         </div>
         <div class="row g-3 mb-4 align-items-center justify-content-between">
@@ -33,17 +33,13 @@
                                 ?>
                             </p>
                         </div>
-                        <div class="mb-3">
+                        <!-- <div class="mb-3">
                             <label class="sr-only" for="article_image">Image</label>
                             <input id="article_image" name="article_image" type="file" width="100" height="30" alt="Upload" src="<?= set_value('article_image') ?>" class="form-control" />
                             <p class="text-danger fs-7">
-                                <?php
-                                if (isset($validation)) {
-                                    echo $validation->getError('article_image');
-                                }
-                                ?>
+                               
                             </p>
-                        </div>
+                        </div> -->
                         <div class="mb-3">
                             <label class="sr-only" for="article_category">Category</label>
                             <select id="article_category" name="article_category" class="form-select" aria-label="Default select example">

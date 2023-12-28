@@ -5,10 +5,13 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-// Common Routes
+// Front Routes
+$routes->get('/', 'Front\HomeController::index');
 
-$routes->get('/', 'Common\HomeController::index');
+$routes->get('article/(:alphanum)', 'Front\FrontController::getArticle/$1');
 
+
+// Auth Routes 
 $routes->get('signup', 'Auth\SignupController::index', ['filter' => 'loginAuthGuard']);
 $routes->post('signup', 'Auth\SignupController::store');
 
@@ -17,15 +20,18 @@ $routes->post('login', 'Auth\LoginController::loginAuth');
 
 $routes->get('reset-password', 'Auth\ForgotPasswordController::index');
 $routes->post('reset-password', 'Auth\ForgotPasswordController::resetPasswordLinkSentAction');
-$routes->match(['get', 'post'],'reset-password/(:alphanum)', 'Auth\ForgotPasswordController::resetPasswordAction/$1');
+$routes->match(['get', 'post'], 'reset-password/(:alphanum)', 'Auth\ForgotPasswordController::resetPasswordAction/$1');
 
 $routes->get('logout', 'Auth\AuthController::logoutAuth');
+
 
 // Dashboard Routes
 $routes->group('', ['filter' => 'dashboardAuthGuard'], static function ($routes) {
     $routes->get('dashboard', 'Dashboard\DashboardController::index');
     $routes->get('dashboard/account', 'Dashboard\UserController::index');
-    $routes->match(['get', 'post'],'dashboard/account/update/avatar', 'Dashboard\UserController::updateAvatar');
+    $routes->match(['get', 'post'], 'dashboard/account/update', 'Dashboard\UserController::updateAccount');
+    $routes->match(['get', 'post'], 'dashboard/account/update/avatar', 'Dashboard\UserController::updateAvatar');
     $routes->get('dashboard/article', 'Dashboard\ArticleController::index');
-    $routes->match(['get', 'post'],'dashboard/article/create', 'Dashboard\ArticleController::createArticle');
+    $routes->match(['get', 'post'], 'dashboard/article/create', 'Dashboard\ArticleController::createArticle');
+    $routes->match(['get', 'post'], 'dashboard/article/edit/(:alphanum)', 'Dashboard\ArticleController::editArticle/$1');
 });

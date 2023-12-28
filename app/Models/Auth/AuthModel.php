@@ -66,7 +66,7 @@ class AuthModel extends Model
 	{
 		$builder = $this->db->table('users');
 		$builder->where('uniid', $token);
-		$builder->update(['password'=> $password]);
+		$builder->update(['password' => $password]);
 		if ($this->db->affectedRows() >= 1) {
 			return true;
 		} else {

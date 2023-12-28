@@ -24,8 +24,8 @@
                             ?>
                                     <div class="col">
                                         <div class="app-card app-card-basic h-100 shadow-sm">
-                                            <div class="ratio ratio-21x9 border-bottom">
-                                                <p class="display-5 text-body-tertiary p-5">Crafting Connections</p>
+                                            <div class="ratio ratio-16x9 border-bottom">
+                                                <img src="<?= base_url('assets/images/background/article_card_image.png') ?>" class="card-img-top" alt="crafting_connections_article_image" />
                                             </div>
                                             <div class="app-card-body px-4 pt-3">
                                                 <h5 class="card-title"><?= esc($article['article_title']) ?></h5>
@@ -43,17 +43,20 @@
                                                         &#8213; <?= $article['username']; ?>
                                                     </small>
                                                 </p>
+                                                <div class="pt-2">
+                                                    <a class="app-btn btn-outline-primary" href="<?= base_url('/dashboard/article/edit/' . $article['article_id']) ?>">Edit</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                            <?php endforeach;
+                                <?php endforeach;
                             endif; ?>
+                                    
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </section>
 <?php
 $this->endSection() ?>

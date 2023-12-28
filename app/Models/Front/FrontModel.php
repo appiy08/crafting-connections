@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models\Dashboard;
+namespace App\Models\Front;
 
 use CodeIgniter\Model;
 
-class ArticleModel extends Model
+class FrontModel extends Model
 {
 
     protected $DBGroup = 'default';
@@ -20,11 +20,10 @@ class ArticleModel extends Model
         'updated_at'
     ];
 
-    public function getArticlesList($uid)
+    public function getArticlesList()
     {
         $builder = $this->db->table('articles');
         $builder->select('articles.article_id,articles.article_title,articles.article_image,articles.article_content,articles.category_id,articles.author_id,articles.created_at,articles.updated_at,users.id,users.username,article_categories.category_id,article_categories.category_title');
-        $builder->where('author_id', $uid);
         $builder->join('users', 'users.id = articles.author_id', 'inner');
         $builder->join('article_categories', 'article_categories.category_id = articles.category_id', 'inner');
         $query = $builder->get();
@@ -37,6 +36,7 @@ class ArticleModel extends Model
     }
     public function getArticle($article_id)
     {
+        echo '<pre>'.$article_id.'</pre>';
         $builder = $this->db->table('articles');
         $builder->select('articles.article_id,articles.article_title,articles.article_image,articles.article_content,articles.category_id,articles.author_id,articles.created_at,articles.updated_at,users.id,users.username,article_categories.category_id,article_categories.category_title');
         $builder->where('article_id', $article_id);

@@ -4,6 +4,8 @@ namespace App\Models\Dashboard;
 
 use CodeIgniter\Model;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UserModel extends Model
 {
     protected $DBGroup = 'default';
@@ -12,7 +14,7 @@ class UserModel extends Model
         'username',
         'email',
         'password',
-        'avatar',
+        'profile_avatar',
         'status',
         'uniid',
         'remember_me_token',
@@ -26,11 +28,34 @@ class UserModel extends Model
     protected $createdField         = 'created_at';
     protected $updatedField         = 'updated_at';
 
-    public function updatedAt($u_id, $u_avatar)
+    public function getUserData($id)
+    {
+        $builder = $this->db->table('users');
+        $builder->select('username, email, profile_avatar');
+        $builder->where('id', $id);
+        $result = $builder->get();
+        if (count($result->getRowArray()) > 0) {
+            return $result->getRowArray();
+        } else {
+            return [];
+        }
+    }
+    public function updateAvatar($u_id, $u_avatar)
     {
         $builder = $this->db->table('users');
         $builder->where('id', $u_id);
-        $builder->update(['profile_pic' => $u_avatar]);
+        $builder->update(['profile_avatar' => $u_avatar]);
+        if ($this->db->affectedRows() >= 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     public function updateAccount($u_id, $u_data)
+    {
+        $builder = $this->db->table('users');
+        $builder->where('id', $u_id);
+        $builder->update($u_data);
         if ($this->db->affectedRows() >= 1) {
             return true;
         } else {

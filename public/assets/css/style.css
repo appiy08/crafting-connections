@@ -125,7 +125,8 @@
 }
 
 body{
-	font-family: "Montserrat";
+	font-family: "Montserrat",sans-serif;
+    background-color: #FDFDFF;
 }
 
 .fs-7{
@@ -138,4 +139,7 @@ body{
 }
 .main-container{
     padding-top: 5rem;
+}
+.app-card.app-card-article .app-card-title{
+font-size: 2.5rem;
 }

@@ -56,7 +56,7 @@ class ForgotPasswordController extends BaseController
                         $email->setFrom('adarsh.patidar.dev.8120@outlook.com', 'Reset Password');
                         $email->setTo($to);
                         $email->setSubject($subject);
-                        $email->setMessage(view('templates/email-template/reset_password_email', $email_body_data));
+                        $email->setMessage(view('templates/email-template/reset_password_mail', $email_body_data));
 
                         if ($email->send()) {
                             $this->session->setTempdata('success', 'Password reset link sent to your email address. Link will be expires in 15 minutes.', 3);

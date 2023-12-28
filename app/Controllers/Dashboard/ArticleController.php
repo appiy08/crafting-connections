@@ -23,7 +23,7 @@ class ArticleController extends BaseController
 
     public function index()
     {
-        $articles = $this->articleModel->getArticles($this->user_id);
+        $articles = $this->articleModel->getArticlesList($this->user_id);
         $data = ['head_title' => 'My Articles', 'articles_data' => $articles,];
         return view('dashboard/articles', $data);
     }
@@ -68,10 +68,10 @@ class ArticleController extends BaseController
                 }
             } else {
                 $data += ['validation' => $this->validator];
-                return view('dashboard/create_article', $data);
+                return view('dashboard/article_create', $data);
             }
         } else {
-            return view('dashboard/create_article', $data);
+            return view('dashboard/article_create', $data);
         }
     }
     // public function createArticle()
@@ -131,12 +131,61 @@ class ArticleController extends BaseController
     //             }
     //         } else {
     //             $data += ['validation' => $this->validator];
-    //             return view('dashboard/create_article', $data);
+    //             return view('dashboard/article_create', $data);
     //         }
     //     } else {
-    //         return view('dashboard/create_article', $data);
+    //         return view('dashboard/article_create', $data);
     //     }
     // }
+    public function editArticle($article_id=null)
+    {
+        $article_data = $this->articleModel->getArticle($article_id);
+        $data = [
+            'head_title' => 'Article Edit',
+            'categories_data' => $this->categories_data, 'session' => $this->session,
+            'article_data' => $article_data
+        ];
+
+        $validationRule = [
+            'article_title' => [
+                'label' => 'Article Title',
+                'rules' => 'required|max_length[100]'
+            ],
+            'article_content' => [
+                'label' => 'Article Content',
+                'rules' => 'required'
+            ],
+            'category_id' => [
+                'label' => 'Category',
+                'rules' => 'required'
+            ]
+        ];
+
+        if ($this->request->is('post')) {
+            if ($this->validate($validationRule)) {
+                $article_data = [
+                    'article_title' => $this->request->getVar('article_title'),
+                    'article_content' => $this->request->getVar('article_content'),
+                    'category_id' => $this->request->getVar('article_category'),
+                    'author_id' => $this->user_id,
+                    'created_at' => new Time('now'),
+                ];
+                $status = $this->articleModel->createArticle($article_data);
+                if ($status === true) {
+                    $this->session->setTempdata('success', 'Article created successfully', 3);
+                    return redirect()->to('/dashboard/article');
+                } else {
+                    $this->session->setTempdata('error',  'Sorry! Unable to create Article', 3);
+                    return redirect()->to(current_url());
+                }
+            } else {
+                $data += ['validation' => $this->validator];
+                return view('dashboard/article_edit', $data);
+            }
+        } else {
+            return view('dashboard/article_edit', $data);
+        }
+    }
     public function getDateTimeDiffs($datetime)
     {
         $current = Time::now();

@@ -3,7 +3,6 @@
 <?= $this->section('content') ?>
 <section>
 	<div class="container-xl">
-
 		<h1 class="app-page-title">My Account</h1>
 		<div class="row gy-4">
 			<div class="col-12 col-lg-6">
@@ -23,14 +22,23 @@
 						</div>
 					</div>
 					<div class="app-card-body px-4 w-100">
+						<?php if (session()->getTempdata('success')) : ?>
+							<div class="alert alert-success" role="alert">
+								<?= session()->getTempdata('success') ?>
+							</div>
+						<?php elseif (session()->getTempdata('error')) : ?>
+							<div class="alert alert-danger" role="alert">
+								<?= session()->getTempdata('error') ?>
+							</div>
+						<?php endif; ?>
 						<div class="item border-bottom py-3">
 							<div class="row justify-content-between align-items-center">
 								<div class="col-auto">
 									<div class="item-label mb-2"><strong>Photo</strong></div>
-									<div class="item-data"><img class="profile-image" src="<?= base_url("assets/images/user.png") ?>" alt=""></div>
+									<div class="item-data"><img class="profile-image" src="<?= $user_data['profile_avatar']; ?>" alt=""></div>
 								</div>
 								<div class="col text-end">
-									<a class="btn-sm app-btn-secondary" href="<?=base_url('/dashboard/account/update/avatar')?>">Change</a>
+									<a class="btn-sm app-btn-secondary" href="<?= base_url('/dashboard/account/update/avatar') ?>">Change</a>
 								</div>
 							</div>
 						</div>
@@ -38,7 +46,7 @@
 							<div class="row justify-content-between align-items-center">
 								<div class="col-auto">
 									<div class="item-label"><strong>Name</strong></div>
-									<div class="item-data">James Doe</div>
+									<div class="item-data"><?= $user_data['username']; ?></div>
 								</div>
 							</div>
 						</div>
@@ -46,33 +54,12 @@
 							<div class="row justify-content-between align-items-center">
 								<div class="col-auto">
 									<div class="item-label"><strong>Email</strong></div>
-									<div class="item-data">james.doe@website.com</div>
+									<div class="item-data"><?= $user_data['email']; ?></div>
 								</div>
 							</div>
 						</div>
-						<div class="item border-bottom py-3">
-							<div class="row justify-content-between align-items-center">
-								<div class="col-auto">
-									<div class="item-label"><strong>Website</strong></div>
-									<div class="item-data">
-										https://johndoewebsite.com
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="item border-bottom py-3">
-							<div class="row justify-content-between align-items-center">
-								<div class="col-auto">
-									<div class="item-label"><strong>Location</strong></div>
-									<div class="item-data">
-										New York
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 					<div class="app-card-footer p-4 mt-auto">
-						<a class="btn app-btn-secondary" href="#">Manage Profile</a>
+						<a class="btn app-btn-secondary" href="<?=base_url('/dashboard/account/update')?>">Manage Profile</a>
 					</div>
 				</div>
 			</div>
