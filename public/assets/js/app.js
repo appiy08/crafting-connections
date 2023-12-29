@@ -2,10 +2,10 @@
 
 /* ===== Enable Bootstrap Popover (on element  ====== */
 const popoverTriggerList = document.querySelectorAll(
-        '[data-bs-toggle="popover"]'
-        );
+  '[data-bs-toggle="popover"]'
+);
 const popoverList = [...popoverTriggerList].map(
-        (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+  (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
 );
 
 /* ==== Enable Bootstrap Alert ====== */
@@ -24,47 +24,47 @@ const sidePanelDrop = document.getElementById("sidepanel-drop");
 const sidePanelClose = document.getElementById("sidepanel-close");
 
 window.addEventListener("load", function () {
-    responsiveSidePanel();
+  responsiveSidePanel();
 });
 
 window.addEventListener("resize", function () {
-    responsiveSidePanel();
+  responsiveSidePanel();
 });
 
 function responsiveSidePanel() {
-    let w = window.innerWidth;
-    if (w >= 1200) {
-        // if larger
-        //console.log('larger');
-        sidePanel.classList.remove("sidepanel-hidden");
-        sidePanel.classList.add("sidepanel-visible");
-    } else {
-        // if smaller
-        //console.log('smaller');
-        sidePanel.classList.remove("sidepanel-visible");
-        sidePanel.classList.add("sidepanel-hidden");
-    }
+  let w = window.innerWidth;
+  if (w >= 1200) {
+    // if larger
+    //console.log('larger');
+    sidePanel.classList.remove("sidepanel-hidden");
+    sidePanel.classList.add("sidepanel-visible");
+  } else {
+    // if smaller
+    //console.log('smaller');
+    sidePanel.classList.remove("sidepanel-visible");
+    sidePanel.classList.add("sidepanel-hidden");
+  }
 }
 
 sidePanelToggler.addEventListener("click", () => {
-    if (sidePanel.classList.contains("sidepanel-visible")) {
-        console.log("visible");
-        sidePanel.classList.remove("sidepanel-visible");
-        sidePanel.classList.add("sidepanel-hidden");
-    } else {
-        console.log("hidden");
-        sidePanel.classList.remove("sidepanel-hidden");
-        sidePanel.classList.add("sidepanel-visible");
-    }
+  if (sidePanel.classList.contains("sidepanel-visible")) {
+    console.log("visible");
+    sidePanel.classList.remove("sidepanel-visible");
+    sidePanel.classList.add("sidepanel-hidden");
+  } else {
+    console.log("hidden");
+    sidePanel.classList.remove("sidepanel-hidden");
+    sidePanel.classList.add("sidepanel-visible");
+  }
 });
 
 sidePanelClose.addEventListener("click", (e) => {
-    e.preventDefault();
-    sidePanelToggler.click();
+  e.preventDefault();
+  sidePanelToggler.click();
 });
 
 sidePanelDrop.addEventListener("click", (e) => {
-    sidePanelToggler.click();
+  sidePanelToggler.click();
 });
 
 /* ====== Mobile search ======= */
@@ -72,80 +72,144 @@ const searchMobileTrigger = document.querySelector(".search-mobile-trigger");
 const searchBox = document.querySelector(".app-search-box");
 
 searchMobileTrigger.addEventListener("click", () => {
-    searchBox.classList.toggle("is-visible");
+  searchBox.classList.toggle("is-visible");
 
-    let searchMobileTriggerIcon = document.querySelector(
-            ".search-mobile-trigger-icon"
-            );
+  let searchMobileTriggerIcon = document.querySelector(
+    ".search-mobile-trigger-icon"
+  );
 
-    if (searchMobileTriggerIcon.classList.contains("fa-magnifying-glass")) {
-        searchMobileTriggerIcon.classList.remove("fa-magnifying-glass");
-        searchMobileTriggerIcon.classList.add("fa-xmark");
-    } else {
-        searchMobileTriggerIcon.classList.remove("fa-xmark");
-        searchMobileTriggerIcon.classList.add("fa-magnifying-glass");
-    }
+  if (searchMobileTriggerIcon.classList.contains("fa-magnifying-glass")) {
+    searchMobileTriggerIcon.classList.remove("fa-magnifying-glass");
+    searchMobileTriggerIcon.classList.add("fa-xmark");
+  } else {
+    searchMobileTriggerIcon.classList.remove("fa-xmark");
+    searchMobileTriggerIcon.classList.add("fa-magnifying-glass");
+  }
 });
 
-// Create Article Editor Script 
-const useDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const isSmallScreen = window.matchMedia('(max-width: 1023.5px)').matches;
+// Create Article Editor Script
+const useDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+const isSmallScreen = window.matchMedia("(max-width: 1023.5px)").matches;
 
 tinymce.init({
-    selector: 'textarea#articleEditor',
-    plugins: 'preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion',
-    editimage_cors_hosts: ['picsum.photos'],
-    menubar: 'file edit view insert format tools table help',
-    toolbar: "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
-    autosave_ask_before_unload: true,
-    autosave_interval: '30s',
-    autosave_prefix: '{path}{query}-{id}-',
-    autosave_restore_when_empty: false,
-    autosave_retention: '2m',
-    image_advtab: true,
-    link_list: [
-        {title: 'My page 1', value: 'https://www.tiny.cloud'},
-        {title: 'My page 2', value: 'http://www.moxiecode.com'}
-    ],
-    image_list: [
-        {title: 'My page 1', value: 'https://www.tiny.cloud'},
-        {title: 'My page 2', value: 'http://www.moxiecode.com'}
-    ],
-    image_class_list: [
-        {title: 'None', value: ''},
-        {title: 'Some class', value: 'class-name'}
-    ],
-    importcss_append: true,
-    file_picker_callback: (callback, value, meta) => {
-        /* Provide file and text for the link dialog */
-        if (meta.filetype === 'file') {
-            callback('https://www.google.com/logos/google.jpg', {text: 'My text'});
-        }
+  selector: "textarea#articleContentEditor",
+  plugins:
+    "preview importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap quickbars emoticons accordion",
+  editimage_cors_hosts: ["picsum.photos"],
+  menubar: "file edit view insert format tools table help",
+  toolbar:
+    "undo redo | accordion accordionremove | blocks fontfamily fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | save print | pagebreak anchor codesample | ltr rtl",
+  autosave_ask_before_unload: true,
+  autosave_interval: "30s",
+  autosave_prefix: "{path}{query}-{id}-",
+  autosave_restore_when_empty: false,
+  autosave_retention: "2m",
+  codesample_global_prismjs: true,
+  codesample_languages: [
+    { text: "HTML/XML", value: "markup" },
+    { text: "JavaScript", value: "javascript" },
+    { text: "CSS", value: "css" },
+    { text: "PHP", value: "php" },
+    { text: "Ruby", value: "ruby" },
+    { text: "Python", value: "python" },
+    { text: "Java", value: "java" },
+    { text: "C", value: "c" },
+    { text: "C#", value: "csharp" },
+    { text: "C++", value: "cpp" },
+    { text: "Django", value: "django" },
+    { text: "Git", value: "git" },
+    { text: "GNU Linker Script", value: "linker-script" },
+    { text: "Go", value: "go" },
+    { text: "Gradle", value: "gradle" },
+    { text: "GraphQL", value: "graphql" },
+    { text: "HTTP", value: "http" },
+    { text: ".ignore", value: "ignore, gitignore, hgignore, npmignore" },
+    { text: "Java", value: "java" },
+    { text: "JSON", value: "json, webmanifest" },
+    { text: "Kotlin", value: "kotlin, kt, kts" },
+    { text: "Markdown", value: "markdown" },
+    { text: "MongoDB", value: "mongodb" },
+    { text: "Perl", value: "perl" },
+    { text: "PL/SQL", value: "plsql" },
+    { text: "PowerShell", value: "powerShell" },
+    { text: "Python", value: "python, py" },
+    { text: "React JSX", value: "jsx" },
+    { text: "React TSX", value: "tsx" },
+    { text: "Ruby", value: "ruby, rb" },
+    { text: "Rust", value: "rust" },
+    { text: "Sass (Sass)", value: "sass" },
+    { text: "Sass (SCSS)", value: "scss" },
+    { text: "SQL", value: "sql" },
+    { text: "TypeScript", value: "typescript" },
+  ],
 
-        /* Provide image and alt text for the image dialog */
-        if (meta.filetype === 'image') {
-            callback('https://www.google.com/logos/google.jpg', {alt: 'My alt text'});
-        }
+  image_advtab: true,
+  link_list: [
+    { title: "My page 1", value: "https://www.tiny.cloud" },
+    { title: "My page 2", value: "http://www.moxiecode.com" },
+  ],
+  image_list: [
+    { title: "My page 1", value: "https://www.tiny.cloud" },
+    { title: "My page 2", value: "http://www.moxiecode.com" },
+  ],
+  image_class_list: [
+    { title: "None", value: "" },
+    { title: "Some class", value: "class-name" },
+  ],
+  importcss_append: true,
+  file_picker_callback: (callback, value, meta) => {
+    /* Provide file and text for the link dialog */
+    if (meta.filetype === "file") {
+      callback("https://www.google.com/logos/google.jpg", { text: "My text" });
+    }
 
-        /* Provide alternative source and posted for the media dialog */
-        if (meta.filetype === 'media') {
-            callback('movie.mp4', {source2: 'alt.ogg', poster: 'https://www.google.com/logos/google.jpg'});
-        }
+    /* Provide image and alt text for the image dialog */
+    if (meta.filetype === "image") {
+      callback("https://www.google.com/logos/google.jpg", {
+        alt: "My alt text",
+      });
+    }
+
+    /* Provide alternative source and posted for the media dialog */
+    if (meta.filetype === "media") {
+      callback("movie.mp4", {
+        source2: "alt.ogg",
+        poster: "https://www.google.com/logos/google.jpg",
+      });
+    }
+  },
+  templates: [
+    {
+      title: "New Table",
+      description: "creates a new table",
+      content:
+        '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>',
     },
-    templates: [
-        {title: 'New Table', description: 'creates a new table', content: '<div class="mceTmpl"><table width="98%%"  border="0" cellspacing="0" cellpadding="0"><tr><th scope="col"> </th><th scope="col"> </th></tr><tr><td> </td><td> </td></tr></table></div>'},
-        {title: 'Starting my story', description: 'A cure for writers block', content: 'Once upon a time...'},
-        {title: 'New list with dates', description: 'New List with dates', content: '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>'}
-    ],
-    template_cdate_format: '[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]',
-    template_mdate_format: '[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]',
-    height: 600,
-    image_caption: true,
-    quickbars_selection_toolbar: 'bold italic | quicklink h2 h3 blockquote quickimage quicktable',
-    noneditable_class: 'mceNonEditable',
-    toolbar_mode: 'sliding',
-    contextmenu: 'link image table',
-    skin: useDarkMode ? 'oxide-dark' : 'oxide',
-    content_css: useDarkMode ? 'dark' : 'default',
-    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+    {
+      title: "Starting my story",
+      description: "A cure for writers block",
+      content: "Once upon a time...",
+    },
+    {
+      title: "New list with dates",
+      description: "New List with dates",
+      content:
+        '<div class="mceTmpl"><span class="cdate">cdate</span><br><span class="mdate">mdate</span><h2>My List</h2><ul><li></li><li></li></ul></div>',
+    },
+  ],
+  template_cdate_format: "[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]",
+  template_mdate_format: "[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]",
+  height: 600,
+  image_caption: true,
+  quickbars_selection_toolbar:
+    "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
+  noneditable_class: "mceNonEditable",
+  toolbar_mode: "sliding",
+  contextmenu: "link image table",
+  skin: useDarkMode ? "oxide-dark" : "oxide",
+  content_css: useDarkMode ? "dark" : "default",
+  content_style:
+    "body { font-family:Helvetica,Arial,sans-serif; font-size:16px }",
 });
+
+

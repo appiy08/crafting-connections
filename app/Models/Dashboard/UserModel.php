@@ -14,7 +14,9 @@ class UserModel extends Model
         'username',
         'email',
         'password',
-        'profile_avatar',
+        'avatar',
+        'gender',
+        'bio',
         'status',
         'uniid',
         'remember_me_token',
@@ -31,7 +33,7 @@ class UserModel extends Model
     public function getUserData($id)
     {
         $builder = $this->db->table('users');
-        $builder->select('username, email, profile_avatar');
+        $builder->select('username, email, avatar, gender, bio');
         $builder->where('id', $id);
         $result = $builder->get();
         if (count($result->getRowArray()) > 0) {
@@ -44,14 +46,14 @@ class UserModel extends Model
     {
         $builder = $this->db->table('users');
         $builder->where('id', $u_id);
-        $builder->update(['profile_avatar' => $u_avatar]);
+        $builder->update(['avatar' => $u_avatar]);
         if ($this->db->affectedRows() >= 1) {
             return true;
         } else {
             return false;
         }
     }
-     public function updateAccount($u_id, $u_data)
+    public function updateAccount($u_id, $u_data)
     {
         $builder = $this->db->table('users');
         $builder->where('id', $u_id);

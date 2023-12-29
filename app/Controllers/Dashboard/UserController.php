@@ -91,7 +91,7 @@ class UserController extends BaseController
             'email' => [
                 'label' => 'Email',
                 'rules' => 'required|min_length[4]|max_length[100]|valid_email'
-            ]
+            ],
         ];
 
         if ($this->request->is('post')) {
@@ -99,6 +99,8 @@ class UserController extends BaseController
                 $user_data = [
                     'username' => $this->request->getVar('username'),
                     'email' => $this->request->getVar('email'),
+                    'gender' => $this->request->getVar('gender'),
+                    'bio' => $this->request->getVar('bio'),
                 ];
                 $status = $this->userModel->updateAccount($this->user_id, $user_data);
                 if ($status === true) {

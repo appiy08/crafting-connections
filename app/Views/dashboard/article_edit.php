@@ -34,11 +34,11 @@
                             </p>
                         </div>
                         <div class="mb-3">
-                            <label class="sr-only" for="article_category">Category</label>
-                            <select id="article_category" name="article_category" class="form-select" aria-label="Default select example">
+                            <label class="sr-only" for="category_id">Category</label>
+                            <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                 <option disabled selected>Category</option>
                                 <?php if (isset($categories_data)) : foreach ($categories_data as $item) : ?>
-                                        <option value="<?= esc($item['category_id']) ?>" selected="<?= $item['category_id'] == $article_data[0]['category_id'] ? true : false ?>"><?= esc($item['category_title']) ?></option>
+                                        <option value="<?= esc($item['category_id']) ?>" <?= $item['category_id'] == $article_data[0]['category_id'] ? 'selected' : null ?>><?= esc($item['category_title']) ?></option>
                                 <?php
                                     endforeach;
                                 endif;
@@ -47,15 +47,15 @@
                             <p class="text-danger fs-7">
                                 <?php
                                 if (isset($validation)) {
-                                    echo $validation->getError('article_category');
+                                    echo $validation->getError('category_id');
                                 }
                                 ?>
                             </p>
                         </div>
 
                         <div class="mb-5">
-                            <label class="sr-only" for="articleEditor">Content</label>
-                            <textarea id="articleEditor" name="article_content" value="<?= $article_data[0]['article_content'] ?>"></textarea>
+                            <label class="sr-only" for="articleContentEditor">Content</label>
+                            <textarea id="articleContentEditor" name="article_content" value="<?= $article_data[0]['article_content'] ?>"></textarea>
                             <p class="text-danger fs-7">
                                 <?php
                                 if (isset($validation)) {
@@ -65,7 +65,7 @@
                             </p>
                         </div>
                         <div class="mt-3 text-center">
-                            <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Submit</button>
+                            <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Update</button>
                         </div>
                         <?= form_close(); ?>
                     </div>

@@ -31,26 +31,70 @@
                             <div class="alert alert-danger" role="alert">
                                 <?= session()->getTempdata('error') ?>
                             </div>
-                        <?php endif;?>
+                        <?php endif; ?>
                         <?= form_open('', ['class' => 'mt-3 mb-5 px-3']); ?>
                         <div class="username mb-3">
-							<label class="sr-only" for="username">Name</label>
-							<input id="username" name="username" type="text" value="<?= set_value('username',$user_data['username']) ?>" class="form-control signup-name" placeholder="Name" />
-							<p class="text-danger fs-7">
-								<?php if (isset($validation)) {
-									echo $validation->getError('username');
-								} ?>
-							</p>
-						</div>
-						<div class="email mb-3">
-							<label class="sr-only" for="email">Email</label>
-							<input id="email" name="email" type="email" value="<?= set_value('email',$user_data['email']) ?>" class="form-control signup-email" placeholder="Email" />
-							<p class="text-danger fs-7">
-								<?php if (isset($validation)) {
-									echo $validation->getError('email');
-								} ?>
-							</p>
-						</div>
+                            <label class="sr-only" for="username">Name</label>
+                            <input id="username" name="username" type="text" value="<?= set_value('username', $user_data['username']) ?>" class="form-control signup-name" placeholder="Name" />
+                            <p class="text-danger fs-7">
+                                <?php if (isset($validation)) {
+                                    echo $validation->getError('username');
+                                } ?>
+                            </p>
+                        </div>
+                        <div class="email mb-3">
+                            <label class="sr-only" for="email">Email</label>
+                            <input id="email" name="email" type="email" value="<?= set_value('email', $user_data['email']) ?>" class="form-control signup-email" placeholder="Email" />
+                            <p class="text-danger fs-7">
+                                <?php if (isset($validation)) {
+                                    echo $validation->getError('email');
+                                } ?>
+                            </p>
+                        </div>
+                        <div class="gender mb-3">
+                            <label class="form-label" for="gender">Gender</label>
+                            <?php echo $user_data['gender'] ?>
+                            <div class="row">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" value="1" <?= set_radio('gender', '1',$user_data['gender']==1?true:false) ?> id="gender-male" />
+                                        <label class="form-check-label" for="gender-male">
+                                            Male
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" value="2" <?= set_radio('gender', '2',$user_data['gender']==2?true:false) ?> id="gender-male" />
+                                        <label class="form-check-label" for="gender-male">
+                                            Female
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gender" value="3" <?= set_radio('gender', '3',$user_data['gender']==3?true:false) ?> id="gender-male" />
+                                        <label class="form-check-label" for="gender-male">
+                                            Other
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-danger fs-7">
+                                <?php if (isset($validation)) {
+                                    echo $validation->getError('email');
+                                } ?>
+                            </p>
+                        </div>
+                        <div class="bio mb-3">
+                            <label class="sr-only" for="bio">Bio</label>
+                            <textarea id="bio" name="bio" class="form-control" placeholder="Write bio here" style="height: 100px"><?= set_value('bio', $user_data['bio']) ?></textarea>
+                            <p class="text-danger fs-7">
+                                <?php if (isset($validation)) {
+                                    echo $validation->getError('bio');
+                                } ?>
+                            </p>
+                        </div>
                         <div class="mt-5 text-center">
                             <button type="submit" class="btn app-btn-primary w-100 theme-btn mx-auto">Update</button>
                         </div>

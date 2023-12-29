@@ -13,16 +13,25 @@
         </div>
         <div class="row g-3 mb-4 align-items-center justify-content-between">
             <div class="col-12">
+                <?php if (session()->getTempdata('success')) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= session()->getTempdata('success') ?>
+                    </div>
+                <?php elseif (session()->getTempdata('error')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= session()->getTempdata('error') ?>
+                    </div>
+                <?php endif; ?>
                 <div class="app-card shadow-sm h-100">
                     <div class="app-card-body p-3 has-card-actions">
-                        <div class="row row-cols-1 row-cols-md-2 g-4">
+                        <div class="row g-4">
                             <?php
 
                             use CodeIgniter\I18n\Time;
 
-                            if (isset($articles_data)) : foreach ($articles_data as $article) :
+                            if (is_array($articles_data)) : foreach ($articles_data as $article) :
                             ?>
-                                    <div class="col">
+                                    <div class="col-12 col-md-6 col-lg-4">
                                         <div class="app-card app-card-basic h-100 shadow-sm">
                                             <div class="ratio ratio-16x9 border-bottom">
                                                 <img src="<?= base_url('assets/images/background/article_card_image.png') ?>" class="card-img-top" alt="crafting_connections_article_image" />
@@ -50,8 +59,11 @@
                                         </div>
                                     </div>
                                 <?php endforeach;
-                            endif; ?>
-                                    
+                            else : ?>
+                                <div class="col-12">
+                                    <p class="fs-4">There are no articles. Please create new article so they appear here.</p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

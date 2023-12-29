@@ -4,34 +4,37 @@ namespace App\Controllers\Dashboard;
 
 use App\Controllers\BaseController;
 use App\Models\Dashboard\ArticleModel;
+use App\Models\Dashboard\UserModel;
 use CodeIgniter\I18n\Time;
 
 
 class ArticleController extends BaseController
 {
 
-    public $articleModel, $session, $categories_data, $user_id;
+    public $articleModel, $userModel, $session, $categories_data, $user_id, $user_data;
 
     public function __construct()
     {
         helper(['menu', 'form', 'url']);
         $this->session = session();
         $this->articleModel = new ArticleModel();
+        $this->userModel = new UserModel();
         $this->categories_data = $this->articleModel->getCategories();
         $this->user_id = $this->session->get('id');
+        $this->user_data = $this->userModel->getUserData($this->session->get('id'));
     }
 
     public function index()
     {
         $articles = $this->articleModel->getArticlesList($this->user_id);
-        $data = ['head_title' => 'My Articles', 'articles_data' => $articles,];
+        $data = ['head_title' => 'My Articles', 'articles_data' => $articles, 'user_data' => $this->user_data];
         return view('dashboard/articles', $data);
     }
     public function createArticle()
     {
         $data = [
             'head_title' => 'Article Creation',
-            'categories_data' => $this->categories_data, 'session' => $this->session
+            'categories_data' => $this->categories_data, 'session' => $this->session, 'user_data' => $this->user_data
         ];
 
         $validationRule = [
@@ -54,7 +57,7 @@ class ArticleController extends BaseController
                 $article_data = [
                     'article_title' => $this->request->getVar('article_title'),
                     'article_content' => $this->request->getVar('article_content'),
-                    'category_id' => $this->request->getVar('article_category'),
+                    'category_id' => $this->request->getVar('category_id'),
                     'author_id' => $this->user_id,
                     'created_at' => new Time('now'),
                 ];
@@ -112,7 +115,7 @@ class ArticleController extends BaseController
     //                         'article_title' => $this->request->getVar('article_title'),
     //                         'article_image' => $image_path,
     //                         'article_content' => $this->request->getVar('article_content'),
-    //                         'category_id' => $this->request->getVar('article_category'),
+    //                         'category_id' => $this->request->getVar('category_id'),
     //                         'author_id' => $this->user_id,
     //                         'created_at' => new Time('now'),
     //                     ];
@@ -137,13 +140,13 @@ class ArticleController extends BaseController
     //         return view('dashboard/article_create', $data);
     //     }
     // }
-    public function editArticle($article_id=null)
+    public function updateArticle($article_id = null)
     {
         $article_data = $this->articleModel->getArticle($article_id);
         $data = [
             'head_title' => 'Article Edit',
             'categories_data' => $this->categories_data, 'session' => $this->session,
-            'article_data' => $article_data
+            'article_data' => $article_data, 'user_data' => $this->user_data
         ];
 
         $validationRule = [
@@ -166,16 +169,14 @@ class ArticleController extends BaseController
                 $article_data = [
                     'article_title' => $this->request->getVar('article_title'),
                     'article_content' => $this->request->getVar('article_content'),
-                    'category_id' => $this->request->getVar('article_category'),
-                    'author_id' => $this->user_id,
-                    'created_at' => new Time('now'),
+                    'category_id' => $this->request->getVar('category_id'),
                 ];
-                $status = $this->articleModel->createArticle($article_data);
+                $status = $this->articleModel->updateArticle($article_id, $article_data);
                 if ($status === true) {
-                    $this->session->setTempdata('success', 'Article created successfully', 3);
+                    $this->session->setTempdata('success', 'Article updated successfully', 3);
                     return redirect()->to('/dashboard/article');
                 } else {
-                    $this->session->setTempdata('error',  'Sorry! Unable to create Article', 3);
+                    $this->session->setTempdata('error',  'Sorry! Unable to update Article', 3);
                     return redirect()->to(current_url());
                 }
             } else {

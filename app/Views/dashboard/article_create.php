@@ -41,8 +41,8 @@
                             </p>
                         </div> -->
                         <div class="mb-3">
-                            <label class="sr-only" for="article_category">Category</label>
-                            <select id="article_category" name="article_category" class="form-select" aria-label="Default select example">
+                            <label class="sr-only" for="category_id">Category</label>
+                            <select id="category_id" name="category_id" class="form-select" aria-label="Default select example">
                                 <option disabled selected>Category</option>
                                 <?php if (isset($categories_data)): foreach ($categories_data as $item): ?>
                                         <?= print_r(esc($item['category_id'])); ?>
@@ -55,15 +55,15 @@
                             <p class="text-danger fs-7">
                                 <?php
                                 if (isset($validation)) {
-                                    echo $validation->getError('article_category');
+                                    echo $validation->getError('category_id');
                                 }
                                 ?>
                             </p>
                         </div>
 
                         <div class="mb-5">
-                            <label class="sr-only" for="articleEditor">Content</label>
-                            <textarea id="articleEditor" name="article_content"></textarea>
+                            <label class="sr-only" for="articleContentEditor">Content</label>
+                            <textarea id="articleContentEditor" name="article_content"></textarea>
                             <p class="text-danger fs-7">
                                 <?php
                                 if (isset($validation)) {

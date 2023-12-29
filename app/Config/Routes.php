@@ -33,5 +33,5 @@ $routes->group('', ['filter' => 'dashboardAuthGuard'], static function ($routes)
     $routes->match(['get', 'post'], 'dashboard/account/update/avatar', 'Dashboard\UserController::updateAvatar');
     $routes->get('dashboard/article', 'Dashboard\ArticleController::index');
     $routes->match(['get', 'post'], 'dashboard/article/create', 'Dashboard\ArticleController::createArticle');
-    $routes->match(['get', 'post'], 'dashboard/article/edit/(:alphanum)', 'Dashboard\ArticleController::editArticle/$1');
+    $routes->match(['get', 'post'], 'dashboard/article/edit/(:alphanum)', 'Dashboard\ArticleController::updateArticle/$1');
 });

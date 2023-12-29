@@ -67,9 +67,17 @@ class ArticleModel extends Model
     {
         $builder = $this->db->table('articles');
         $result = $builder->insert($data);
-        echo '<pre>';
-        print_r($result);
-        echo '</pre>';
+        if ($this->db->affectedRows() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+     public function updateArticle($article_id,$article_data)
+    {
+        $builder = $this->db->table('articles');
+        $builder->where('article_id',$article_id);
+        $builder->update($article_data);
         if ($this->db->affectedRows() > 0) {
             return true;
         } else {
