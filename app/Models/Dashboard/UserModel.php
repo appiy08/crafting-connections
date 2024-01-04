@@ -36,7 +36,7 @@ class UserModel extends Model
         $builder->select('username, email, avatar, gender, bio');
         $builder->where('id', $id);
         $result = $builder->get();
-        if (count($result->getRowArray()) > 0) {
+        if (is_array($result->getRowArray())) {
             return $result->getRowArray();
         } else {
             return [];
